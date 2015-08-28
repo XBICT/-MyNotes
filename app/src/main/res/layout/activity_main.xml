@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@color/BGNgoodle"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/noNotes"
+        android:id="@+id/noNotes"
+        android:layout_below="@+id/toolbar"
+        android:textSize="28sp"
+        android:textColor="@color/material_grey_500"
+        android:layout_marginTop="171dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/noNotes2"
+        android:id="@+id/noNotes2"
+        android:layout_below="@+id/noNotes"
+        android:textSize="28sp"
+        android:textColor="@color/material_grey_500"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/noNotes3"
+        android:id="@+id/noNotes3"
+        android:textStyle="bold"
+        android:layout_below="@+id/noNotes2"
+        android:textSize="28sp"
+        android:textColor="#757575"
+        android:layout_centerHorizontal="true"
+        android:onClick="noteCreate" />
+
+
+</RelativeLayout>
+

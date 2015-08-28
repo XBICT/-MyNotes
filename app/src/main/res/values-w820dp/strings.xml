@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">notesGit</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_search">Search</string>
+    <string name="nav_menu">Settings</string>
+    <string name="hollow"> </string>
+    <string name="edTxt">Type something</string>
+    <string name="noNotes">У вас немає нотаток,</string>
+    <string name="noNotes2">щоб створити нажміть</string>
+    <string name="noNotes3">cюди</string>
+    <string name="noteTitle">Назва</string>
+    <string name="noteText">Нотатка</string>
+    <string name="action_settings">Sett</string>
+</resources>
