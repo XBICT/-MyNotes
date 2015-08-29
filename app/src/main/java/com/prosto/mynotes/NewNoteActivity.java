@@ -10,7 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 
-public class NewNoteActivity extends AppCompatActivity{
+public class NewNoteActivity extends AppCompatActivity {
 
     private EditText noteText;
     public Toolbar toolbar;

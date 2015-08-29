@@ -5,14 +5,16 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
-
+<include android:id="@+id/toolbar"
+    layout="@layout/toolbar"/>
     <EditText
+        android:layout_below="@+id/toolbar"
         android:id="@+id/noteTitle"
         android:inputType="textCapWords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="30sp"
         android:textColor="@color/material_grey_500"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -29,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColorHint="@color/material_grey_500"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="20sp"
         android:enabled="true"
         android:hint="@string/noteText"
         android:textColor="@color/material_grey_500"

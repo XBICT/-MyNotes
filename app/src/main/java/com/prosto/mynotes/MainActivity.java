@@ -8,6 +8,17 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 public class MainActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
@@ -16,15 +27,64 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolbar();
+        initNavDrawer(toolbar);
+
+    }
+
+
+    private void initNavDrawer(Toolbar toolbar){
+        AccountHeader headerResult = initNavHeader();
+        Drawer drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .withDisplayBelowStatusBar(true)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.app_name).withIdentifier(1).withIcon(CommunityMaterial.Icon.cmd_home),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(R.string.action_settings).withIdentifier(2)).build();
+
+
+    }
+
+    private AccountHeader initNavHeader() {
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        return headerResult;
     }
 
     private void initToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //toolbar.setTitle(R.string.app_name);
-    }
+        toolbar.findViewById(R.id.toolbar);
+        if (toolbar!= null){
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+
+
+    }
 
     public void noteCreate(View view){
         Intent intent = new Intent(this, NewNoteActivity.class);
