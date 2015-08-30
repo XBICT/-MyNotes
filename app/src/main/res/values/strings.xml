@@ -15,4 +15,6 @@
     <string name="noteTextHint">Нотатка</string>
     <string name="reminder">Нагадування</string>
     <string name="archive">Архів</string>
+    <string name="alarm">Будильник</string>
+    <string name="info">Про програму</string>
 </resources>
