@@ -4,13 +4,28 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 
 public class NewNoteActivity extends AppCompatActivity {
+
+    final String LOG_TAG = "myLogs";
+
+    final String FILENAME = "file";
+
 
     private EditText noteText;
     public Toolbar toolbar;
@@ -23,6 +38,57 @@ public class NewNoteActivity extends AppCompatActivity {
         noteActivate();
         initToolbar();
     }
+
+    public void onclick(View v) {
+        switch (v.getId()) {
+            case R.id.btnWrite:
+                writeFile();
+                break;
+            case R.id.btnRead:
+                readFile();
+                break;
+        }
+    }
+
+    void readFile() {
+        try {
+            // открываем поток для чтения
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(FILENAME)));
+            String str = "";
+            // читаем содержимое
+            while ((str = br.readLine()) != null) {
+                Log.d(LOG_TAG, str);
+                toolbar.setTitle(str);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void writeFile() {
+        try {
+            // отрываем поток для записи
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    openFileOutput(FILENAME, MODE_PRIVATE)));
+            // пишем данные
+            String noteStr = noteText.getText().toString();
+            bw.write(noteStr);
+            toolbar.setTitle(noteStr);
+            // закрываем поток
+            bw.close();
+            Log.d(LOG_TAG, "Файл записан");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     private void noteActivate(){
 
