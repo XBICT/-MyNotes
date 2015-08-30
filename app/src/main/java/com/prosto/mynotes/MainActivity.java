@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private AccountHeader initNavHeader() {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.drawable.headerbgn)
                 .addProfiles(
                         new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
                 )
