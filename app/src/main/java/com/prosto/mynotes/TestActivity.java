@@ -1,12 +1,10 @@
 package com.prosto.mynotes;
 
-import android.content.Intent;
-import android.graphics.Paint;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
@@ -20,77 +18,24 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-public class MainActivity extends AppCompatActivity {
-    public Drawer drawer;
+public class TestActivity extends AppCompatActivity{
+
     public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.test_layout);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         initToolbar();
         initNavDrawer(toolbar);
 
     }
 
-
-    private void initNavDrawer(Toolbar toolbar){
-        AccountHeader headerResult = initNavHeader();
-        drawer = new DrawerBuilder()
-                .withActivity(this)
-                .withAccountHeader(headerResult)
-                .withDisplayBelowStatusBar(false)
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.home).withIdentifier(1).withIcon(CommunityMaterial.Icon.cmd_home),
-                        new PrimaryDrawerItem().withName(R.string.noteTextHint).withIdentifier(2).withIcon(FontAwesome.Icon.faw_sticky_note),
-                        new PrimaryDrawerItem().withName(R.string.alarm).withIdentifier(3).withIcon(GoogleMaterial.Icon.gmd_alarm),
-                        new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(4).withIcon(FontAwesome.Icon.faw_calendar),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(2),
-                        new SecondaryDrawerItem().withName(R.string.info).withIdentifier(2),
-                        new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(3))
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                        startActivity(intent);
-
-                        return true;
-                    }
-                })
-                .build();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(drawer != null && drawer.isDrawerOpen()){
-            drawer.closeDrawer();
-        }else{
-        super.onBackPressed();
-    }
-    }
-
-    private AccountHeader initNavHeader() {
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.headerbgn)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
-                .build();
-        return headerResult;
-    }
 
     private void initToolbar(){
         toolbar.findViewById(R.id.toolbar);
@@ -107,35 +52,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void initNavDrawer(Toolbar toolbar){
+        AccountHeader headerResult = initNavHeader();
+        Drawer drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .withDisplayBelowStatusBar(false)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.home).withIdentifier(1).withIcon(CommunityMaterial.Icon.cmd_home),
+                        new PrimaryDrawerItem().withName(R.string.noteTextHint).withIdentifier(1).withIcon(FontAwesome.Icon.faw_sticky_note),
+                        new PrimaryDrawerItem().withName(R.string.alarm).withIdentifier(1).withIcon(GoogleMaterial.Icon.gmd_alarm),
+                        new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(1).withIcon(FontAwesome.Icon.faw_calendar),
 
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(2),
+                        new SecondaryDrawerItem().withName(R.string.info).withIdentifier(2),
+                        new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(3))
+                .build();
 
     }
-
-    public void noteCreate(View view){
-        Intent intent = new Intent(this, NewNoteActivity.class);
-        startActivity(intent);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    private AccountHeader initNavHeader() {
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.headerbgn)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        return headerResult;
     }
 }

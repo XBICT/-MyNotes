@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.BufferedReader;
@@ -39,6 +38,9 @@ public class NewNoteActivity extends AppCompatActivity {
         initToolbar();
     }
 
+
+
+    //file
     public void onclick(View v) {
         switch (v.getId()) {
             case R.id.btnWrite:
@@ -87,9 +89,6 @@ public class NewNoteActivity extends AppCompatActivity {
         }
     }
 
-
-
-
     private void noteActivate(){
 
         noteText.postDelayed(new Runnable() {
@@ -104,12 +103,11 @@ public class NewNoteActivity extends AppCompatActivity {
 
     }
 
+    //toolbar
     private void initToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
