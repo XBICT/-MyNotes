@@ -21,7 +21,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColorHint="@color/material_grey_500"
         android:background="@color/BGNgoodle"
-        android:hint="@string/noteTitle" />
+        android:hint="@string/noteTitleHint" />
 
     <EditText android:id="@+id/noteText"
         android:layout_below="@+id/noteTitle"
@@ -33,7 +33,7 @@
         android:textColorHint="@color/material_grey_500"
         android:layout_marginLeft="20sp"
         android:enabled="true"
-        android:hint="@string/noteText"
+        android:hint="@string/noteTextHint"
         android:textColor="@color/material_grey_500"
         android:textSize="20sp"
         android:background="@color/BGNgoodle"

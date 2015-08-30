@@ -1,6 +1,7 @@
 package com.prosto.mynotes;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -39,13 +41,19 @@ public class MainActivity extends AppCompatActivity {
         Drawer drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(headerResult)
-                .withDisplayBelowStatusBar(true)
+                .withDisplayBelowStatusBar(false)
                 .withToolbar(toolbar)
-                .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.app_name).withIdentifier(1).withIcon(CommunityMaterial.Icon.cmd_home),
+                        new PrimaryDrawerItem().withName(R.string.home).withIdentifier(1).withIcon(CommunityMaterial.Icon.cmd_home),
+                        new PrimaryDrawerItem().withName(R.string.noteTextHint).withIdentifier(1).withIcon(FontAwesome.Icon.faw_sticky_note),
+                        new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(1).withIcon(FontAwesome.Icon.faw_calendar),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.action_settings).withIdentifier(2)).build();
+                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(2),
+                        new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(3))
+                .build();
+        if (drawer != null){
+
+        }
 
 
     }

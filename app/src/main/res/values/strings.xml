@@ -3,14 +3,16 @@
     <string name="app_name">MyNotes</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_search">Search</string>
-    <string name="nav_menu">Settings</string>
+    <string name="action_search">Пошук</string>
+    <string name="settings">Налаштування</string>
     <string name="hollow"> </string>
+    <string name="home">Home</string>
     <string name="edTxt">Type something</string>
     <string name="noNotes">У вас немає нотаток,</string>
     <string name="noNotes2">щоб створити нажміть</string>
     <string name="noNotes3">cюди</string>
-    <string name="noteTitle">Назва</string>
-    <string name="noteText">Нотатка</string>
-    <string name="action_settings">Sett</string>
+    <string name="noteTitleHint">Назва</string>
+    <string name="noteTextHint">Нотатка</string>
+    <string name="reminder">Нагадування</string>
+    <string name="archive">Архів</string>
 </resources>
