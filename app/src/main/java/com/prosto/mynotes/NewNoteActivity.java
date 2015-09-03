@@ -56,6 +56,14 @@ public class NewNoteActivity extends AppCompatActivity {
 //file
 void readFile() {
     try {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                openFileOutput(FILENAME, MODE_PRIVATE)));
+        // пишем данные
+        String noteStr = noteText.getText().toString();
+        bw.write(noteStr);
+        // закрываем поток
+        bw.close();
+        Log.d(LOG_TAG, "Файл записан");
         // открываем поток для чтения
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 openFileInput(FILENAME)));
@@ -71,37 +79,14 @@ void readFile() {
         e.printStackTrace();
     }
 }
-    void writeFile() {
-        try {
-            // отрываем поток для записи
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                    openFileOutput(FILENAME, MODE_PRIVATE)));
-            // пишем данные
-            String noteStr = noteText.getText().toString();
-            bw.write(noteStr);
-            // закрываем поток
-            bw.close();
-            Log.d(LOG_TAG, "Файл записан");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     public void onclick(View v) {
-        switch (v.getId()) {
-            case R.id.btnWrite:
-                writeFile();
+            readFile();
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
                 intent.putExtra("note", noteText.getText());
-                break;
-            case R.id.btnRead:
-                readFile();
-                intent = new Intent(NewNoteActivity.this, MainActivity.class);
-                intent.putExtra("note", noteText.getText());
                 startActivity(intent);
-                break;
-        }
+
+
     }
 
     //toolbar
@@ -115,6 +100,7 @@ void readFile() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                onclick(v);
             }
         });
 

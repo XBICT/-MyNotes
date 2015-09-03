@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -22,6 +24,11 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class TestActivity extends AppCompatActivity{
 
     public Drawer result;
@@ -33,16 +40,13 @@ public class TestActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_layout);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         cardView = (CardView) findViewById(R.id.cardView);
-        cardView.setCardElevation(5);
-        cardView.setElevation(5);
-        
+        toolbar =(Toolbar) findViewById(R.id.toolbar);
+
         initToolbar();
         initNavDrawer(toolbar);
-
     }
+
 
 
     private void initToolbar(){
@@ -52,15 +56,12 @@ public class TestActivity extends AppCompatActivity{
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 return false;
             }
         });
-
     }
     private void initNavDrawer(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();

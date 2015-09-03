@@ -10,7 +10,6 @@
     android:onClick="noteCreate"
     android:elevation="6dp">
 
-
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
 
@@ -19,12 +18,25 @@
         android:layout_height="200dp"
         android:id="@+id/cardView"
         android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardText="sdfsd"
+        app:mdl_title="CardView"
         app:mdl_description="A Basic CardView"
         app:cardCornerRadius="5dp"
         app:cardBackgroundColor="#ffffff"
         app:cardElevation="4sp"
-        app:cardUseCompatPadding="true"/>
+        app:cardUseCompatPadding="true">
+        <TextView
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="#757575"
+            android:id="@+id/cardText"
+            android:text="@string/cardNote" />
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>

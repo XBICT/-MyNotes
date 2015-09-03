@@ -39,28 +39,5 @@
         android:background="@color/BGNgoodle"
         android:focusable="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Записати Файл"
-        android:id="@+id/btnWrite"
-        android:layout_below="@+id/noteText"
-        android:layout_alignStart="@+id/noteText"
-        android:layout_marginTop="57dp"
-        android:onClick="onclick"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Зчитати"
-        android:id="@+id/btnRead"
-        android:elevation="0dp"
-        android:onClick="onclick"
-        android:background="@color/BGNgoodle"
-        android:textColor="@color/material_grey_600"
-        android:layout_alignTop="@+id/btnWrite"
-        android:layout_alignEnd="@+id/noteText"
-        android:layout_marginEnd="42dp" />
-
 
 </RelativeLayout>
