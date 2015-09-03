@@ -8,13 +8,17 @@
     <string name="hollow"> </string>
     <string name="home">Home</string>
     <string name="edTxt">Type something</string>
+    /* Main*/
     <string name="noNotes">У вас немає нотаток,</string>
     <string name="noNotes2">щоб створити нажміть</string>
     <string name="noNotes3">cюди</string>
+    /* NoteCreate*/
     <string name="noteTitleHint">Назва</string>
     <string name="noteTextHint">Нотатка</string>
+    /* NavDrawer*/
     <string name="reminder">Нагадування</string>
     <string name="archive">Архів</string>
     <string name="alarm">Будильник</string>
+    <string name="notes">Нотатки</string>
     <string name="info">Про програму</string>
 </resources>

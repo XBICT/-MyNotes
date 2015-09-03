@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/BGNgoodle"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:onClick="noteCreate"
+    android:elevation="6dp">
 
 
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/cardView"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        app:mdl_description="A Basic CardView"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="#ffffff"
+        app:cardElevation="4sp"
+        app:cardUseCompatPadding="true"/>
 </RelativeLayout>

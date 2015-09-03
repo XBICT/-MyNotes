@@ -1,6 +1,7 @@
 package com.prosto.mynotes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,70 +26,19 @@ public class NewNoteActivity extends AppCompatActivity {
 
     final String FILENAME = "file";
 
-
-    private EditText noteText;
     public Toolbar toolbar;
+    private EditText noteText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_note_layout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         noteText = (EditText) findViewById(R.id.noteText);
+
         noteActivate();
         initToolbar();
     }
-
-
-
-    //file
-    public void onclick(View v) {
-        switch (v.getId()) {
-            case R.id.btnWrite:
-                writeFile();
-                break;
-            case R.id.btnRead:
-                readFile();
-                break;
-        }
-    }
-
-    void readFile() {
-        try {
-            // открываем поток для чтения
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    openFileInput(FILENAME)));
-            String str = "";
-            // читаем содержимое
-            while ((str = br.readLine()) != null) {
-                Log.d(LOG_TAG, str);
-                toolbar.setTitle(str);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    void writeFile() {
-        try {
-            // отрываем поток для записи
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                    openFileOutput(FILENAME, MODE_PRIVATE)));
-            // пишем данные
-            String noteStr = noteText.getText().toString();
-            bw.write(noteStr);
-            toolbar.setTitle(noteStr);
-            // закрываем поток
-            bw.close();
-            Log.d(LOG_TAG, "Файл записан");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void noteActivate(){
 
         noteText.postDelayed(new Runnable() {
@@ -103,11 +53,82 @@ public class NewNoteActivity extends AppCompatActivity {
 
     }
 
+//file
+void readFile() {
+    try {
+        // открываем поток для чтения
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                openFileInput(FILENAME)));
+        String str = "";
+        // читаем содержимое
+        while ((str = br.readLine()) != null) {
+            Log.d(LOG_TAG, str);
+            toolbar.setTitle(str);
+        }
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+    void writeFile() {
+        try {
+            // отрываем поток для записи
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    openFileOutput(FILENAME, MODE_PRIVATE)));
+            // пишем данные
+            String noteStr = noteText.getText().toString();
+            bw.write(noteStr);
+            // закрываем поток
+            bw.close();
+            Log.d(LOG_TAG, "Файл записан");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void onclick(View v) {
+        switch (v.getId()) {
+            case R.id.btnWrite:
+                writeFile();
+                Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
+                intent.putExtra("note", noteText.getText());
+                break;
+            case R.id.btnRead:
+                readFile();
+                intent = new Intent(NewNoteActivity.this, MainActivity.class);
+                intent.putExtra("note", noteText.getText());
+                startActivity(intent);
+                break;
+        }
+    }
+
     //toolbar
     private void initToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.keyboard_backspace);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
+
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
