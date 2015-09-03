@@ -64,16 +64,20 @@ public class MainActivity extends AppCompatActivity {
 
     void readFile() {
         try {
-            // открываем поток для чтения
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     openFileInput(FILENAME)));
             String str = "";
-            // читаем содержимое
             while ((str = br.readLine()) != null) {
                 Log.d(LOG_TAG, str);
                 txtFile.setText(str);
                 if (str.equals("")){
                     toolbar.setTitle("ok");
+                    TextView noNotes = (TextView) findViewById(R.id.noNotes);
+                    noNotes.setText(R.string.noNotes);
+                    TextView noNotes2 = (TextView) findViewById(R.id.noNotes2);
+                    noNotes2.setText(R.string.noNotes2);
+                    TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
+                    noNotes3.setText(R.string.noNotes3);
                 }else{
                     TextView noNotes = (TextView) findViewById(R.id.noNotes);
                     noNotes.setText("");
