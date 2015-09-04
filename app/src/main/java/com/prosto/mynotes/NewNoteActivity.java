@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -83,7 +84,9 @@ void readFile() {
     public void onclick(View v) {
             readFile();
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
+                Intent intentTest = new Intent(NewNoteActivity.this, TestActivity.class);
                 intent.putExtra("note", noteText.getText());
+                intentTest.putExtra("note", noteText.getText());
                 startActivity(intent);
 
 

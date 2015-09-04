@@ -29,12 +29,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
 public class TestActivity extends AppCompatActivity{
 
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
     public CardView cardView;
+    public TextView cardText;
+    public TextView txtFile;
+
+    final String LOG_TAG = "myLogs";
+    final String FILENAME = "file";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,41 @@ public class TestActivity extends AppCompatActivity{
         setContentView(R.layout.test_layout);
         cardView = (CardView) findViewById(R.id.cardView);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
+        cardText = (TextView) findViewById(R.id.cardText);
 
+        readFile();
         initToolbar();
         initNavDrawer(toolbar);
     }
 
+
+    void readFile() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    openFileInput(FILENAME)));
+            String str = "";
+            while ((str = br.readLine()) != null) {
+                Log.d(LOG_TAG, str);
+                if (str.equals("")){
+                    cardText.setText(str);
+                }else {toolbar.setTitle("ok");
+                    TextView space = (TextView) findViewById(R.id.space);
+                    space.setPadding(10,10,756,20);
+                    TextView cardTitle = (TextView) findViewById(R.id.cardTitle);
+
+                    cardText.setPadding(20, 75, 10, 20);
+
+                    //cardTitle.setPadding(30,10,10,20);
+                    //cardTitle.setText(str);
+                    cardText.setText(str);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void initToolbar(){
@@ -105,8 +141,6 @@ public class TestActivity extends AppCompatActivity{
         startActivity(intent);
 
     }
-
-
     private AccountHeader initNavHeader() {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
