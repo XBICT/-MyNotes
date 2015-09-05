@@ -67,12 +67,11 @@ public class TestActivity extends AppCompatActivity{
                     cardText.setText(str);
                 }else {toolbar.setTitle("ok");
                     TextView space = (TextView) findViewById(R.id.space);
-                    space.setPadding(10,10,756,20);
+                    space.setPadding(10,10,756,10);
                     TextView cardTitle = (TextView) findViewById(R.id.cardTitle);
 
-                    cardText.setPadding(20, 75, 10, 20);
-
-                    //cardTitle.setPadding(30,10,10,20);
+                    cardText.setPadding(20, 10, 10, 10);
+                    //cardTitle.setPadding(0,0,0,0);
                     //cardTitle.setText(str);
                     cardText.setText(str);
                 }

@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textColor="#757575"
             android:id="@+id/cardTitle" />
         <TextView
