@@ -29,6 +29,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
-    public TextView txtFile;
+    public TextView cardText;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
@@ -49,13 +50,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        txtFile = (TextView) findViewById(R.id.txtFile);
-        txtFile.setText(getIntent().getStringExtra("note"));
-
+        TextView cardText = (TextView) findViewById(R.id.cardText);
+        cardText.setText(getIntent().getStringExtra("note"));
 
         readFile();
-
         initToolbar();
         initNavDrawer(toolbar);
 
@@ -69,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             String str = "";
             while ((str = br.readLine()) != null) {
                 Log.d(LOG_TAG, str);
-                txtFile.setText(str);
                 if (str.equals("")){
                     toolbar.setTitle("ok");
                     TextView noNotes = (TextView) findViewById(R.id.noNotes);
@@ -78,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
                     noNotes2.setText(R.string.noNotes2);
                     TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
                     noNotes3.setText(R.string.noNotes3);
+                    TextView space = (TextView) findViewById(R.id.space);
+                    space.setPadding(0,0,0,0);
+                    cardText.setPadding(0,0,0,0);
                 }else{
                     TextView noNotes = (TextView) findViewById(R.id.noNotes);
                     noNotes.setText("");
@@ -85,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
                     noNotes2.setText("");
                     TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
                     noNotes3.setText("");
+                    TextView space = (TextView) findViewById(R.id.space);
+                    space.setPadding(10,10,756,10);
+                    TextView cardText = (TextView) findViewById(R.id.cardText);
+                    cardText.setPadding(20, 10, 10, 10);
+                    cardText.setText(str);
                 }
             }
 
@@ -174,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void noteCreate(View view){
         Intent intent = new Intent(this, NewNoteActivity.class);
+        TextView cardText = (TextView) findViewById(R.id.cardText);
+        intent.putExtra("note", cardText.getText());
         startActivity(intent);
 
     }

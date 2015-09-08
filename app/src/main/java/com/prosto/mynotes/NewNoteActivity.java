@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 public class NewNoteActivity extends AppCompatActivity {
 
     final String LOG_TAG = "myLogs";
-
     final String FILENAME = "file";
 
     public Toolbar toolbar;
@@ -36,12 +35,13 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(R.layout.new_note_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         noteText = (EditText) findViewById(R.id.noteText);
+        noteText.setText(getIntent().getStringExtra("note"));
+
 
         noteActivate();
         initToolbar();
     }
     private void noteActivate(){
-
         noteText.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -51,7 +51,6 @@ public class NewNoteActivity extends AppCompatActivity {
         }, 50);
         noteText.setFocusableInTouchMode(true);
         noteText.requestFocus();
-
     }
 
 //file
@@ -64,7 +63,7 @@ void readFile() {
         bw.write(noteStr);
         // закрываем поток
         bw.close();
-        Log.d(LOG_TAG, "Файл записан");
+        Log.d(LOG_TAG, "Файл записаний");
         // открываем поток для чтения
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 openFileInput(FILENAME)));
@@ -84,9 +83,7 @@ void readFile() {
     public void onclick(View v) {
             readFile();
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
-                Intent intentTest = new Intent(NewNoteActivity.this, TestActivity.class);
                 intent.putExtra("note", noteText.getText());
-                intentTest.putExtra("note", noteText.getText());
                 startActivity(intent);
 
 

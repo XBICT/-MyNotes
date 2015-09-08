@@ -37,7 +37,6 @@ public class TestActivity extends AppCompatActivity{
     public Toolbar toolbar;
     public CardView cardView;
     public TextView cardText;
-    public TextView txtFile;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
@@ -46,8 +45,8 @@ public class TestActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_layout);
-        cardView = (CardView) findViewById(R.id.cardView);
         toolbar =(Toolbar) findViewById(R.id.toolbar);
+        cardView = (CardView) findViewById(R.id.cardView);
         cardText = (TextView) findViewById(R.id.cardText);
 
         readFile();
@@ -68,11 +67,7 @@ public class TestActivity extends AppCompatActivity{
                 }else {toolbar.setTitle("ok");
                     TextView space = (TextView) findViewById(R.id.space);
                     space.setPadding(10,10,756,10);
-                    TextView cardTitle = (TextView) findViewById(R.id.cardTitle);
-
                     cardText.setPadding(20, 10, 10, 10);
-                    //cardTitle.setPadding(0,0,0,0);
-                    //cardTitle.setText(str);
                     cardText.setText(str);
                 }
             }
