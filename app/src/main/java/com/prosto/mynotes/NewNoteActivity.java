@@ -92,9 +92,11 @@ void readFile() {
     //toolbar
     private void initToolbar(){
         toolbar.findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if (toolbar!= null){
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
         toolbar.setNavigationIcon(R.drawable.keyboard_backspace);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

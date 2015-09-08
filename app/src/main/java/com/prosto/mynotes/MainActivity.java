@@ -1,7 +1,7 @@
 package com.prosto.mynotes;
 
 import android.content.Intent;
-import android.graphics.Paint;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -28,12 +27,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
         readFile();
         initToolbar();
         initNavDrawer(toolbar);
-
     }
-
 
     void readFile() {
         try {
@@ -124,11 +118,15 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 2:
-                                intent = new Intent(MainActivity.this, NewNoteActivity.class);
-                                startActivity(intent);
+                                Toast toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                toast.show();
                                 break;
                             case 3:
                                 intent = new Intent(MainActivity.this, TestActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 6:
+                                intent = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(intent);
                                 break;
                         }

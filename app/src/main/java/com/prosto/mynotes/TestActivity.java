@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -117,8 +118,8 @@ public class TestActivity extends AppCompatActivity{
                                 startActivity(intent);
                                 break;
                             case 2:
-                                intent = new Intent(TestActivity.this, NewNoteActivity.class);
-                                startActivity(intent);
+                                Toast toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                toast.show();
                                 break;
                             case 3:
                                 intent = new Intent(TestActivity.this, TestActivity.class);
