@@ -20,6 +20,7 @@
     <string name="archive">Архів</string>
     <string name="alarm">Будильник</string>
     <string name="notes">Нотатки</string>
+    <string name="interFace">Інтерфейс</string>
     <string name="info">Про програму</string>
     /* Card View*/
     <string name="cardNote">Нотатка</string>
