@@ -1,59 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".TestActivity"
     android:background="@color/BGNgoodle"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:onClick="noteCreate"
-    android:elevation="6dp">
+    android:fitsSystemWindows="true">
 
-    <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cardView"
-        android:layout_margin="10dp"
-        app:mdl_description="A Basic CardView"
-        app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="#ffffff"
-        app:cardElevation="4sp"
-        app:cardUseCompatPadding="true"
-        android:layout_below="@+id/toolbar"
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textSize="28sp"
-            android:text=""
-            android:textColor="#757575"
-            android:id="@+id/space" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="#757575"
-            android:id="@+id/cardTitle" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/cardText"
-            android:textSize="26sp"
-            android:textColor="#757575"
-            android:layout_alignTop="@+id/cardView"
-            android:layout_alignStart="@+id/cardView"
-            />
-    </android.support.v7.widget.CardView>
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <android.support.v7.widget.Toolbar
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/toolbar"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:background="?attr/colorPrimary" />
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
-
-</RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>

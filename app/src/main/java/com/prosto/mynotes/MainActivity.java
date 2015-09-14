@@ -32,25 +32,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final int LAYOUT = R.layout.activity_main;
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
-    public TextView cardText;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView cardText = (TextView) findViewById(R.id.cardText);
-        cardText.setText(getIntent().getStringExtra("note"));
 
-        readFile();
+
         initToolbar();
+        readFile();
         initNavDrawer(toolbar);
     }
 
@@ -69,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
                     noNotes2.setText(R.string.noNotes2);
                     TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
                     noNotes3.setText(R.string.noNotes3);
-                    TextView space = (TextView) findViewById(R.id.space);
-                    space.setPadding(0,0,0,0);
-                    cardText.setPadding(0,0,0,0);
                 }else{
                     TextView noNotes = (TextView) findViewById(R.id.noNotes);
                     noNotes.setText("");
@@ -79,11 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     noNotes2.setText("");
                     TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
                     noNotes3.setText("");
-                    TextView space = (TextView) findViewById(R.id.space);
-                    space.setPadding(10,10,756,10);
-                    TextView cardText = (TextView) findViewById(R.id.cardText);
-                    cardText.setPadding(20, 10, 10, 10);
-                    cardText.setText(str);
                 }
             }
 
@@ -166,13 +157,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
-    }
-    public void noteCreate(View view){
-        Intent intent = new Intent(this, NewNoteActivity.class);
-        TextView cardText = (TextView) findViewById(R.id.cardText);
-        intent.putExtra("note", cardText.getText());
-        startActivity(intent);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,6 +3,7 @@ package com.prosto.mynotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -31,28 +32,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
-public class TestActivity extends AppCompatActivity{
+public class TestActivity extends AppCompatActivity {
+    public static final int LAYOUT = R.layout.test_layout;
 
-    public Drawer result;
-    public Intent intent;
     public Toolbar toolbar;
-    public CardView cardView;
     public TextView cardText;
+    private DrawerLayout drawerLayout;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_layout);
-        toolbar =(Toolbar) findViewById(R.id.toolbar);
-        cardView = (CardView) findViewById(R.id.cardView);
-        cardText = (TextView) findViewById(R.id.cardText);
+        setContentView(LAYOUT);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         readFile();
         initToolbar();
-        initNavDrawer(toolbar);
+        initNavigation();
     }
 
 
@@ -63,13 +62,10 @@ public class TestActivity extends AppCompatActivity{
             String str = "";
             while ((str = br.readLine()) != null) {
                 Log.d(LOG_TAG, str);
-                if (str.equals("")){
+                if (str.equals("")) {
                     cardText.setText(str);
-                }else {toolbar.setTitle("ok");
-                    TextView space = (TextView) findViewById(R.id.space);
-                    space.setPadding(10,10,756,10);
-                    cardText.setPadding(20, 10, 10, 10);
-                    cardText.setText(str);
+                } else {
+                    toolbar.setTitle("ok");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -80,13 +76,29 @@ public class TestActivity extends AppCompatActivity{
     }
 
 
-    private void initToolbar(){
+    public void onclick(View v) {
+        readFile();
+        Intent intent = new Intent(TestActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    //toolbar
+    private void initToolbar() {
         toolbar.findViewById(R.id.toolbar);
-        toolbar.setTitle("CardView");
-        if (toolbar!= null){
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
+        toolbar.setNavigationIcon(R.drawable.keyboard_backspace);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                onclick(v);
+            }
+        });
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -94,62 +106,8 @@ public class TestActivity extends AppCompatActivity{
             }
         });
     }
-    private void initNavDrawer(final Toolbar toolbar){
-        final AccountHeader headerResult = initNavHeader();
-        result = new DrawerBuilder()
-                .withActivity(this)
-                .withAccountHeader(headerResult)
-                .withDisplayBelowStatusBar(false)
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.notes).withIdentifier(1).withIcon(FontAwesome.Icon.faw_sticky_note),
-                        new PrimaryDrawerItem().withName(R.string.alarm).withIdentifier(2).withIcon(GoogleMaterial.Icon.gmd_alarm),
-                        new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(3).withIcon(FontAwesome.Icon.faw_calendar),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(4),
-                        new SecondaryDrawerItem().withName(R.string.info).withIdentifier(5),
-                        new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(6))
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int i, IDrawerItem drawerItem) {
-                        switch (result.getCurrentSelection()){
-                            case 1:
-                                intent = new Intent(TestActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                break;
-                            case 2:
-                                Toast toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
-                                toast.show();
-                                break;
-                            case 3:
-                                intent = new Intent(TestActivity.this, TestActivity.class);
-                                startActivity(intent);
-                                break;
-                        }
-                        return false;
-                    }
-                })
-                .build();
-    }
-    public void noteCreate(View view){
-        Intent intent = new Intent(this, NewNoteActivity.class);
-        startActivity(intent);
 
-    }
-    private AccountHeader initNavHeader() {
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.drawable.headerbgn)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
-                )
-                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
-                    @Override
-                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
-                    }
-                })
-                .build();
-        return headerResult;
+    private void initNavigation(){
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
     }
 }

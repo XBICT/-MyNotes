@@ -22,7 +22,7 @@ import java.io.OutputStreamWriter;
 
 
 public class NewNoteActivity extends AppCompatActivity {
-
+    public static final int LAYOUT = R.layout.new_note_layout;
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
 
@@ -31,8 +31,9 @@ public class NewNoteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_note_layout);
+        setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         noteText = (EditText) findViewById(R.id.noteText);
         noteText.setText(getIntent().getStringExtra("note"));
@@ -105,8 +106,6 @@ void readFile() {
                 onclick(v);
             }
         });
-
-
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

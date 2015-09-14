@@ -7,13 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class SettingsActivity extends AppCompatActivity {
-
+    public static final int LAYOUT = R.layout.settings_layout;
     public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);
+        setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         initToolbar();
