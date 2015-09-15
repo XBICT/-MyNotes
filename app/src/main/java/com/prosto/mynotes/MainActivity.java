@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
         readFile();
-        initNavDrawer(toolbar);
+        initNavigation(toolbar);
     }
 
     void readFile() {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initNavDrawer(final Toolbar toolbar){
+    private void initNavigation(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();
         result = new DrawerBuilder()
                 .withActivity(this)

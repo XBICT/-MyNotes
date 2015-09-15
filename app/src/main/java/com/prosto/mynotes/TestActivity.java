@@ -35,6 +35,8 @@ import java.io.InputStreamReader;
 public class TestActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.test_layout;
 
+    public Drawer result;
+    public Intent intent;
     public Toolbar toolbar;
     public TextView cardText;
     private DrawerLayout drawerLayout;
@@ -51,7 +53,7 @@ public class TestActivity extends AppCompatActivity {
 
         readFile();
         initToolbar();
-        initNavigation();
+        initNavigation(toolbar);
     }
 
 
@@ -106,8 +108,63 @@ public class TestActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initNavigation(){
+    //Nav Drawer
+    private void initNavigation(final Toolbar toolbar){
+        final AccountHeader headerResult = initNavHeader();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .withDisplayBelowStatusBar(false)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.notes).withIdentifier(1).withIcon(FontAwesome.Icon.faw_sticky_note),
+                        new PrimaryDrawerItem().withName(R.string.alarm).withIdentifier(2).withIcon(GoogleMaterial.Icon.gmd_alarm),
+                        new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(3).withIcon(FontAwesome.Icon.faw_calendar),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(4),
+                        new SecondaryDrawerItem().withName(R.string.info).withIdentifier(5),
+                        new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(6))
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem drawerItem) {
+                        switch (result.getCurrentSelection()){
+                            case 1:
+                                intent = new Intent(TestActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 2:
+                                Toast toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                toast.show();
+                                break;
+                            case 3:
+                                intent = new Intent(TestActivity.this, TestActivity.class);
+                                startActivity(intent);
+                                break;
+                            case 6:
+                                intent = new Intent(TestActivity.this, SettingsActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        return false;
+                    }
+                })
+                .build();
+    }
+    private AccountHeader initNavHeader() {
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.headerbgn)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        return headerResult;
     }
 }
