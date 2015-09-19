@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void initNavigation(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();
         result = new DrawerBuilder()

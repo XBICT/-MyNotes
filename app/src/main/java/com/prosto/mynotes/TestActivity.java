@@ -3,13 +3,17 @@ package com.prosto.mynotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.prosto.mynotes.adapter.TabsPagerFragmentAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -39,7 +44,9 @@ public class TestActivity extends AppCompatActivity {
     public Intent intent;
     public Toolbar toolbar;
     public TextView cardText;
+    public TabLayout tabLayout;
     private DrawerLayout drawerLayout;
+    public ViewPager viewPager;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
@@ -51,9 +58,22 @@ public class TestActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+
+
+        initTabs();
         readFile();
         initToolbar();
         initNavigation(toolbar);
+    }
+
+    private void initTabs(){
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 
@@ -108,10 +128,16 @@ public class TestActivity extends AppCompatActivity {
             }
         });
     }
+
     //Nav Drawer
     private void initNavigation(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.open, R.string.close);
+        drawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(headerResult)
@@ -155,9 +181,6 @@ public class TestActivity extends AppCompatActivity {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.headerbgn)
-                .addProfiles(
-                        new ProfileDrawerItem().withName("Rostyk Boyko").withEmail("rosstyk@gmail.com").withIcon(getResources().getDrawable(R.drawable.face))
-                )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
@@ -165,6 +188,9 @@ public class TestActivity extends AppCompatActivity {
                     }
                 })
                 .build();
+
+
         return headerResult;
     }
+
 }
