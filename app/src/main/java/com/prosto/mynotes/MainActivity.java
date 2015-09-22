@@ -3,6 +3,9 @@ package com.prosto.mynotes;
 import android.content.Intent;
 import android.media.audiofx.BassBoost;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -25,6 +28,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.prosto.mynotes.adapter.TabsPagerFragmentAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -36,22 +40,40 @@ public class MainActivity extends AppCompatActivity {
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
+    public TextView cardText;
+    public TabLayout tabLayout;
+    private DrawerLayout drawerLayout;
+    public ViewPager viewPager;
 
     final String LOG_TAG = "myLogs";
     final String FILENAME = "file";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitleColor(0x00eeeeee);
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        initToolbar();
+
+        initTabs();
         readFile();
+        initToolbar();
         initNavigation(toolbar);
     }
+
+    private void initTabs(){
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
+
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
 
     void readFile() {
         try {
@@ -60,24 +82,12 @@ public class MainActivity extends AppCompatActivity {
             String str = "";
             while ((str = br.readLine()) != null) {
                 Log.d(LOG_TAG, str);
-                if (str.equals("")){
+                if (str.equals("")) {
+                    cardText.setText(str);
+                } else {
                     toolbar.setTitle("ok");
-                    TextView noNotes = (TextView) findViewById(R.id.noNotes);
-                    noNotes.setText(R.string.noNotes);
-                    TextView noNotes2 = (TextView) findViewById(R.id.noNotes2);
-                    noNotes2.setText(R.string.noNotes2);
-                    TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
-                    noNotes3.setText(R.string.noNotes3);
-                }else{
-                    TextView noNotes = (TextView) findViewById(R.id.noNotes);
-                    noNotes.setText("");
-                    TextView noNotes2 = (TextView) findViewById(R.id.noNotes2);
-                    noNotes2.setText("");
-                    TextView noNotes3 = (TextView) findViewById(R.id.noNotes3);
-                    noNotes3.setText("");
                 }
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -86,6 +96,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    //toolbar
+    private void initToolbar() {
+        toolbar.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+        toolbar.setNavigationIcon(R.drawable.keyboard_backspace);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                onclick(v);
+            }
+        });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+    }
+
+    public void onclick(View v) {
+        Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+        startActivity(intent);
+    }
 
     private void initNavigation(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();
@@ -115,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
                                 toast.show();
                                 break;
                             case 3:
-                                intent = new Intent(MainActivity.this, TestActivity.class);
-                                startActivity(intent);
+                                toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                toast.show();
                                 break;
                             case 6:
                                 intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -143,14 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
         return headerResult;
-    }
-    private void initToolbar(){
-        toolbar.findViewById(R.id.toolbar);
-        if (toolbar!= null){
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
     }
     @Override
     public void onBackPressed() {

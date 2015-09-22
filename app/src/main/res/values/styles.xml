@@ -7,8 +7,8 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="windowNoTitle">true</item>
+    <item name="android:keyTextColor">@color/white</item>
     <item name="android:colorControlNormal">@color/white</item>
-
     <item name="android:statusBarColor">@android:color/transparent</item>
 </style>
 

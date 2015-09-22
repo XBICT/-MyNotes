@@ -6,8 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.prosto.mynotes.Constants;
-import com.prosto.mynotes.TestActivity;
+import com.prosto.mynotes.MainActivity;
 import com.prosto.mynotes.fragment.TestFragment;
+import com.prosto.mynotes.fragment.NoteFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
 
@@ -16,9 +17,9 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
     public TabsPagerFragmentAdapter(FragmentManager fm) {
         super(fm);
         tabs = new String[]{
-                "tab 1",
+                "Нотатки",
                 "Нагадування",
-                "tab 2"
+                "Календар"
         };
     }
 
@@ -31,7 +32,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
     public android.support.v4.app.Fragment getItem(int position) {
         switch (position){
             case 0:
-                return TestFragment.getInstance();
+                return NoteFragment.getInstance();
 
             case 1:
                 return TestFragment.getInstance();
