@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.prosto.mynotes.Constants;
 import com.prosto.mynotes.MainActivity;
+import com.prosto.mynotes.fragment.NotificationFragment;
 import com.prosto.mynotes.fragment.TestFragment;
 import com.prosto.mynotes.fragment.NoteFragment;
 
@@ -35,7 +36,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter{
                 return NoteFragment.getInstance();
 
             case 1:
-                return TestFragment.getInstance();
+                return NotificationFragment.getInstance();
 
             case 2:
                 return TestFragment.getInstance();
