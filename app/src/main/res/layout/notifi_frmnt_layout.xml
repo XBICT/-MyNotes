@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/BGNgoodle"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Нагадування"
-        android:id="@+id/noNotes"
-        android:textSize="28sp"
-        android:textColor="@color/material_grey_500"
-        android:layout_marginTop="230dp"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true">
+
+    <include android:id="@+id/card_view"
+        layout="@layout/card_view"/>
+
+   </LinearLayout>
+
 
 </RelativeLayout>

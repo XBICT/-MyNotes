@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitleColor(0x00eeeeee);
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
