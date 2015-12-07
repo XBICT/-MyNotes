@@ -4,16 +4,17 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestActivity"
     android:background="@color/BGNgoodle"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:fitsSystemWindows="true">
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:padding="0dp"
         android:layout_margin="0dp"
         android:background="@color/BGNgoodle">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,30 +29,12 @@
             android:layout_marginRight="16dp"
             android:layout_alignParentStart="true" />
 
-        <TextView
+        <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/themeChoice"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="20sp"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/textView"
+            android:id="@+id/listSettings"
             android:layout_alignParentStart="true"
-            android:textColor="@color/TextColor" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Світла"
-            android:id="@+id/textView3"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/material_grey_500"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentStart="true" />
+            android:layout_below="@+id/textView" />
 
     </RelativeLayout>
     <android.support.design.widget.CoordinatorLayout

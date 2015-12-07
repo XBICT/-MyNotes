@@ -24,6 +24,7 @@
     /*Settings*/
     <string name="interFace">Інтерфейс</string>
     <string name="themeChoice">Тема</string>
+    <string name="langChoice">Мова</string>
     /* Card View*/
     <string name="cardNote">Нотатка</string>
 

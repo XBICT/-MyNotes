@@ -5,9 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.settings_layout;
+    private ArrayList<String> settingsArray = new ArrayList<>();
     public Toolbar toolbar;
 
     @Override
@@ -17,7 +23,29 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+
+        settingsOptions();
         initToolbar();
+    }
+
+    private void initSetList(){
+        settingsArray.add(getString(R.string.themeChoice));
+        settingsArray.add(getString(R.string.langChoice));
+    }
+
+    private void settingsOptions(){
+        initSetList();
+        final ListView listSettings = (ListView)findViewById(R.id.listSettings);
+        ArrayAdapter<String> settingsAdapter;
+        settingsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, settingsArray);
+        listSettings.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+            }
+        });
+        listSettings.setAdapter(settingsAdapter);
     }
 
     private void initToolbar(){
