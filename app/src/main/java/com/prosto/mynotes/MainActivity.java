@@ -221,11 +221,11 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 2:
-                                Toast toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(getApplicationContext(),  "Coming soon", Toast.LENGTH_SHORT);
                                 toast.show();
                                 break;
                             case 3:
-                                toast = Toast.makeText(getApplicationContext(), "В розробці", Toast.LENGTH_SHORT);
+                                toast = Toast.makeText(getApplicationContext(), "Coming soon", Toast.LENGTH_SHORT);
                                 toast.show();
                                 break;
                             case 6:
