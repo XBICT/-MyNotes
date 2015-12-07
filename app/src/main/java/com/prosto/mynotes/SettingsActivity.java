@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -40,13 +41,15 @@ public class SettingsActivity extends AppCompatActivity {
     private void settingsOptions(){
         initSetList();
         final ListView listSettings = (ListView)findViewById(R.id.listSettings);
-        ArrayAdapter<String> settingsAdapter;
+        final ArrayAdapter<String> settingsAdapter;
         settingsAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, settingsArray);
         listSettings.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
+                Toast toast = Toast.makeText(getApplicationContext(),  settingsAdapter.getItem(position), Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
         listSettings.setAdapter(settingsAdapter);
