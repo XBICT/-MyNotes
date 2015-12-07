@@ -1,18 +1,17 @@
 package com.prosto.mynotes;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,25 +27,31 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.prosto.mynotes.adapter.TabsPagerFragmentAdapter;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
+    private static final String PATH = "data.txt";
     public static final int LAYOUT = R.layout.activity_main;
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
-    public TextView cardText;
-    public TabLayout tabLayout;
-    private DrawerLayout drawerLayout;
-    public ViewPager viewPager;
+    public TextView noteText;
+    public CardView cardView;
 
-    final String LOG_TAG = "myLogs";
-    final String FILENAME = "file";
+    int counter = 0;
+
+    FileOutputStream outputStream;
+    FileInputStream inputStream;
+
+    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayAdapter<String> adapterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,46 +60,113 @@ public class MainActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        noteText = (TextView)findViewById(R.id.noteText);
+        noteText.setText(getIntent().getStringExtra("note"));
 
-
-        initTabs();
-        readFile();
+        readFromFile();
+        initList();
+        addNote();
+        noteCheck();
         initToolbar();
         initNavigation(toolbar);
     }
 
-    private void initTabs(){
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getSupportFragmentManager());
-
-        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+    public void noteCheck(){
+        TextView noNotes = (TextView)findViewById(R.id.noNotes);
+        TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
+        TextView noNotes3 = (TextView)findViewById(R.id.noNotes3);
+        if(arrayList.size()!=0){
+            noNotes.setText("");
+            noNotes2.setText("");
+            noNotes3.setText("");}
+        else{
+            noNotes.setText(getString(R.string.noNotes));
+            noNotes2.setText(getString(R.string.noNotes2));
+            noNotes3.setText(getString(R.string.noNotes3));
+        }
     }
-
-
-    void readFile() {
+    private void readFromFile() {
+        counter = 0;
+        BufferedReader bufferedReader = null;
+        String line;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    openFileInput(FILENAME)));
-            String str = "";
-            while ((str = br.readLine()) != null) {
-                Log.d(LOG_TAG, str);
-                if (str.equals("")) {
-                    cardText.setText(str);
-                } else {
-                    toolbar.setTitle("ok");
+            inputStream = openFileInput(PATH);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = bufferedReader.readLine()) != null) {
+                if (!line.equals("")) {
+                    arrayList.add(line);
                 }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            }inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void initList() {
+        final ListView listView = (ListView) findViewById(R.id.listView);
+        adapterView = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, arrayList);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,  long id) {
+                view.setSelected(true);
+                arrayList.remove(position);
+                deleteElement();
+                initList();
+                listView.setAdapter(adapterView);
+            }
+        });
+        listView.setAdapter(adapterView);
+    }
 
+    public void addNote() {
+        if(!noteText.getText().equals("")){
+            arrayList.add(noteText.getText().toString());
+            adapterView.notifyDataSetChanged();
+            writeToFile();
+        }
+    }
+    public void deleteElement(){
+        try {
+            outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+            outputStream = openFileOutput(PATH, Context.MODE_APPEND);
+            for (int i = 0; i<arrayList.size();i++){
+                outputStream.write(arrayList.get(i).getBytes());
+                outputStream.write(("\n").getBytes());
+            }
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        noteCheck();
 
+    }
+    public void cleanFile(View view){
+        try {
+            outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void writeToFile() {
+        counter = arrayList.size() - 1;
+        try {
+            outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+            outputStream = openFileOutput(PATH, Context.MODE_APPEND);
+            for (int i = 0; i<arrayList.size();i++){
+                outputStream.write(arrayList.get(i).getBytes());
+                outputStream.write(("\n").getBytes());
+            }
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //toolbar
     private void initToolbar() {
@@ -121,11 +193,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onclick(View v) {
+    public void onclick(View view) {
         Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
         startActivity(intent);
     }
-
     private void initNavigation(final Toolbar toolbar){
         final AccountHeader headerResult = initNavHeader();
         result = new DrawerBuilder()

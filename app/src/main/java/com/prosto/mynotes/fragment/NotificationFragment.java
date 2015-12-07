@@ -6,8 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.prosto.mynotes.R;
+
+import java.util.ArrayList;
 
 public class NotificationFragment extends Fragment{
     private View view;
@@ -27,4 +32,5 @@ public class NotificationFragment extends Fragment{
 
         return fragment;
     }
+
 }

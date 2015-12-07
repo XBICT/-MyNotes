@@ -8,16 +8,11 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true">
 
-    <include android:id="@+id/card_view"
-        layout="@layout/card_view"/>
-
-   </LinearLayout>
-
-
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_centerHorizontal="true"
+        android:background="#b9b9b9" />
 </RelativeLayout>

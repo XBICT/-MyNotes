@@ -7,7 +7,19 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="windowNoTitle">true</item>
+    <item name="android:textColor">@color/TextColor</item>
     <item name="android:colorControlNormal">@color/white</item>
+
+
 </style>
 
+    <style name="ListViewStyle.Light" parent="android:style/Widget.ListView">
+        <item name="android:padding">10dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:height">40dp</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:cacheColorHint">#00000000</item>
+
+    </style>
 </resources>
