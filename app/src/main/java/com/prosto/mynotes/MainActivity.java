@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
@@ -43,9 +45,16 @@ public class MainActivity extends AppCompatActivity {
     public Intent intent;
     public Toolbar toolbar;
     public TextView noteText;
-    public CardView cardView;
 
+    int size;
     int counter = 0;
+    //CardView
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "CardViewActivity";
+
+
 
     FileOutputStream outputStream;
     FileInputStream inputStream;
@@ -60,17 +69,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
         noteText = (TextView)findViewById(R.id.noteText);
         noteText.setText(getIntent().getStringExtra("note"));
 
         readFromFile();
         initList();
         addNote();
-        noteCheck();
+    //    noteCheck();
+        notesHide();
         initToolbar();
         initNavigation(toolbar);
     }
 
+    public void notesHide(){
+        TextView noNotes = (TextView)findViewById(R.id.noNotes);
+        TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
+        TextView noNotes3 = (TextView)findViewById(R.id.noNotes3);
+            noNotes.setText("");
+            noNotes2.setText("");
+            noNotes3.setText("");
+    }
     public void noteCheck(){
         TextView noNotes = (TextView)findViewById(R.id.noNotes);
         TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
@@ -105,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.listView);
         adapterView = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, arrayList);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,  long id) {
@@ -115,7 +139,23 @@ public class MainActivity extends AppCompatActivity {
                 listView.setAdapter(adapterView);
             }
         });
-        listView.setAdapter(adapterView);
+        setTitle(""+arrayList.size());
+        getDataSet();
+        mAdapter = new MyRecyclerViewAdapter(getDataSet());
+        mRecyclerView.setAdapter(mAdapter);
+      //  listView.setAdapter(adapterView);
+    }
+
+    private ArrayList<DataObject> getDataSet() {
+        ArrayList results = new ArrayList<DataObject>();
+        if(arrayList.size()!=0){
+        for (int index = 0; index < arrayList.size(); index++) {
+        // setTitle("в циклі " + arrayList.size());
+            DataObject obj = new DataObject("note" + (index+1),
+                  arrayList.get(index));
+            results.add(index, obj);
+        }}
+        return results;
     }
 
     public void addNote() {
@@ -123,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             arrayList.add(noteText.getText().toString());
             adapterView.notifyDataSetChanged();
             writeToFile();
+            initList();
         }
     }
     public void deleteElement(){
