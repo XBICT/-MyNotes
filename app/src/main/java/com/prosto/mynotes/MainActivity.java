@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
 public class MainActivity extends AppCompatActivity {
     private static final String PATH = "data.txt";
     public static final int LAYOUT = R.layout.activity_main;
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public TextView noteText;
 
-    int size;
     int counter = 0;
     //CardView
     private RecyclerView mRecyclerView;
@@ -54,13 +52,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
-
-
     FileOutputStream outputStream;
     FileInputStream inputStream;
 
     private ArrayList<String> arrayList = new ArrayList<>();
-    private ArrayAdapter<String> adapterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +75,13 @@ public class MainActivity extends AppCompatActivity {
         readFromFile();
         initList();
         addNote();
-    //    noteCheck();
-        notesHide();
+        noteCheck();
+
         initToolbar();
         initNavigation(toolbar);
     }
 
-    public void notesHide(){
-        TextView noNotes = (TextView)findViewById(R.id.noNotes);
-        TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
-        TextView noNotes3 = (TextView)findViewById(R.id.noNotes3);
-            noNotes.setText("");
-            noNotes2.setText("");
-            noNotes3.setText("");
-    }
+
     public void noteCheck(){
         TextView noNotes = (TextView)findViewById(R.id.noNotes);
         TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
@@ -125,25 +113,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void initList() {
-        final ListView listView = (ListView) findViewById(R.id.listView);
-        adapterView = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, arrayList);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,  long id) {
-                view.setSelected(true);
-                arrayList.remove(position);
-                deleteElement();
-                initList();
-                listView.setAdapter(adapterView);
-            }
-        });
-        setTitle(""+arrayList.size());
         getDataSet();
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
-      //  listView.setAdapter(adapterView);
+
     }
 
     private ArrayList<DataObject> getDataSet() {
@@ -161,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
     public void addNote() {
         if(!noteText.getText().equals("")){
             arrayList.add(noteText.getText().toString());
-            adapterView.notifyDataSetChanged();
             writeToFile();
             initList();
         }

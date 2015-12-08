@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class SettingsActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.settings_layout;
     private ArrayList<String> settingsArray = new ArrayList<>();
+    private ArrayAdapter<String> settingsAdapter;
     public Toolbar toolbar;
 
     @Override
@@ -36,6 +37,22 @@ public class SettingsActivity extends AppCompatActivity {
     private void initSetList(){
         settingsArray.add(getString(R.string.themeChoice));
         settingsArray.add(getString(R.string.langChoice));
+    }
+
+    public void onSettingsItemClick(){
+        final ListView listView = (ListView) findViewById(R.id.listView);
+        settingsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, settingsArray);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,  long id) {
+                view.setSelected(true);
+
+                listView.setAdapter(settingsAdapter);
+            }
+        });
+        listView.setAdapter(settingsAdapter);
     }
 
     private void settingsOptions(){
