@@ -26,7 +26,7 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         noteText = (EditText) findViewById(R.id.noteText);
-
+        noteText.setText(getIntent().getStringExtra("note"));
 
         noteActivate();
         initToolbar();
@@ -37,6 +37,7 @@ public class NewNoteActivity extends AppCompatActivity {
             public void run() {
                 InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 keyboard.showSoftInput(noteText, 0);
+
             }
         }, 50);
 
@@ -48,8 +49,6 @@ public class NewNoteActivity extends AppCompatActivity {
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
                 intent.putExtra("note", noteText.getText().toString());
                 startActivity(intent);
-
-
     }
 
     //toolbar

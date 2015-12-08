@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
@@ -39,18 +40,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String PATH = "data.txt";
+    private static String LOG_TAG = "CardViewActivity";
     public static final int LAYOUT = R.layout.activity_main;
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
     public TextView noteText;
-
+    public CardView cardView;
     int counter = 0;
-    //CardView
+     //CardView
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
+    RecyclerView.Adapter mAdapter;
 
     FileOutputStream outputStream;
     FileInputStream inputStream;
@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        cardView = (CardView)findViewById(R.id.card_view);
 
+        RecyclerView.LayoutManager mLayoutManager;
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -112,12 +114,51 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private void writeToFile() {
+        counter = arrayList.size() - 1;
+        try {
+            outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+            outputStream = openFileOutput(PATH, Context.MODE_APPEND);
+            for (int i = 0; i<arrayList.size();i++){
+                outputStream.write(arrayList.get(i).getBytes());
+                outputStream.write(("\n").getBytes());
+            }
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void addNote() {
+        if(!noteText.getText().equals("")){
+            arrayList.add(noteText.getText().toString());
+            writeToFile();
+            initList();
+        }
+    }
     public void initList() {
-
         getDataSet();
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                noteText.setText(arrayList.get(position));
+                intent.putExtra("note", noteText.getText().toString());
+                startActivity(intent);
+                arrayList.remove(position);
+                writeToFile();
+            }
+        });
     }
 
     private ArrayList<DataObject> getDataSet() {
@@ -132,13 +173,7 @@ public class MainActivity extends AppCompatActivity {
         return results;
     }
 
-    public void addNote() {
-        if(!noteText.getText().equals("")){
-            arrayList.add(noteText.getText().toString());
-            writeToFile();
-            initList();
-        }
-    }
+
     public void deleteElement(){
         try {
             outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
@@ -165,22 +200,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void writeToFile() {
-        counter = arrayList.size() - 1;
-        try {
-            outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
-            outputStream.write("".getBytes());
-            outputStream.close();
-            outputStream = openFileOutput(PATH, Context.MODE_APPEND);
-            for (int i = 0; i<arrayList.size();i++){
-                outputStream.write(arrayList.get(i).getBytes());
-                outputStream.write(("\n").getBytes());
-            }
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     //toolbar
     private void initToolbar() {
@@ -279,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+      //  getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
