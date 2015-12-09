@@ -85,19 +85,23 @@ android:fitsSystemWindows="true">
         android:layout_alignBottom="@+id/toolbar"
         android:layout_alignParentEnd="true" />
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Note"
-        android:id="@+id/button"
-        android:layout_marginBottom="41dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onclick"
-        android:background="#e7e7e7" />
+        android:layout_gravity="bottom|end"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_note_add_white_24dp"
 
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:onClick="onclick" />
 
 </RelativeLayout>
+
+
 
 <android.support.design.widget.NavigationView
     android:layout_width="wrap_content"

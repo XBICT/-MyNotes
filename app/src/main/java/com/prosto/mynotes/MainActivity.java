@@ -3,6 +3,7 @@ package com.prosto.mynotes;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public Toolbar toolbar;
     public TextView noteText;
     public CardView cardView;
+    
     int counter = 0;
      //CardView
     private RecyclerView mRecyclerView;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         noteText = (TextView)findViewById(R.id.noteText);
         noteText.setText(getIntent().getStringExtra("note"));
 
+
         readFromFile();
         initList();
         addNote();
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigation(toolbar);
     }
-
 
     public void noteCheck(){
         TextView noNotes = (TextView)findViewById(R.id.noNotes);
@@ -243,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.alarm).withIdentifier(2).withIcon(GoogleMaterial.Icon.gmd_alarm),
                         new PrimaryDrawerItem().withName(R.string.reminder).withIdentifier(3).withIcon(FontAwesome.Icon.faw_calendar),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(4),
+                      // new SecondaryDrawerItem().withName(R.string.archive).withIdentifier(4),
                         new SecondaryDrawerItem().withName(R.string.info).withIdentifier(5),
                         new SecondaryDrawerItem().withName(R.string.settings).withIdentifier(6))
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
