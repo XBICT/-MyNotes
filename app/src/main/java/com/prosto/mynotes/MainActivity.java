@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,6 +41,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+   // File notes = new File( PATH);
+  //  File title = new File( PATH_TITLES);
     private static final String PATH = "data.txt";
     private static final String PATH_TITLES = "title.txt";
     private static String LOG_TAG = "CardViewActivity";

@@ -65,6 +65,34 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                switch (position){
+                    case 0:
+                        builder.setTitle("Вибір теми")
+                                .setMessage("Покормите кота!")
+                                .setCancelable(true)
+                                .setNegativeButton("ОК, иду на кухню",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                        break;
+                    case 1:
+                        builder.setTitle("Вибір мови")
+                                .setMessage("Покормите кота!")
+                                .setCancelable(true)
+                                .setNegativeButton("ОК, иду на кухню",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        break;
+                }
+                AlertDialog alert = builder.create();
+                alert.show();
                 Toast toast = Toast.makeText(getApplicationContext(),  settingsAdapter.getItem(position), Toast.LENGTH_SHORT);
                 toast.show();
             }
