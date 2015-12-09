@@ -45,6 +45,13 @@ android:fitsSystemWindows="true">
         style="@style/StateText"/>
 
     <TextView
+        android:id="@+id/noteTitle"
+        style="@style/StateText"/>
+    <TextView
+        android:id="@+id/noteText"
+        style="@style/StateText"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -77,13 +84,7 @@ android:fitsSystemWindows="true">
         android:layout_centerHorizontal="true"
         android:onClick="onclick" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/noteText"
-        android:layout_alignBottom="@+id/toolbar"
-        android:layout_alignParentEnd="true" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

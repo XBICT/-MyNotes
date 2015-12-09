@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-
-
 public class NewNoteActivity extends AppCompatActivity {
     public static final int LAYOUT = R.layout.new_note_layout;
 
     public Toolbar toolbar;
     private EditText noteText;
+    private EditText noteTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +24,11 @@ public class NewNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         noteText = (EditText) findViewById(R.id.noteText);
+        noteTitle = (EditText) findViewById(R.id.noteTitle);
         noteText.setText(getIntent().getStringExtra("note"));
+        noteTitle.setText(getIntent().getStringExtra("title"));
 
         noteActivate();
         initToolbar();
@@ -48,6 +50,7 @@ public class NewNoteActivity extends AppCompatActivity {
     public void onclick(View v) {
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
                 intent.putExtra("note", noteText.getText().toString());
+                intent.putExtra("title", noteTitle.getText().toString());
                 startActivity(intent);
     }
 

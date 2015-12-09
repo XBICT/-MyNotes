@@ -41,15 +41,16 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String PATH = "data.txt";
+    private static final String PATH_TITLES = "title.txt";
     private static String LOG_TAG = "CardViewActivity";
     public static final int LAYOUT = R.layout.activity_main;
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
     public TextView noteText;
+    public TextView noteTitle;
     public CardView cardView;
-    
-    int counter = 0;
+
      //CardView
     private RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     FileOutputStream outputStream;
     FileInputStream inputStream;
 
-    private ArrayList<String> arrayList = new ArrayList<>();
+    private ArrayList<String> arrayNotesList = new ArrayList<>();
+    private ArrayList<String> arrayTitlesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +76,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         noteText = (TextView)findViewById(R.id.noteText);
+        noteTitle = (TextView)findViewById(R.id.noteTitle);
         noteText.setText(getIntent().getStringExtra("note"));
-
+        noteTitle.setText(getIntent().getStringExtra("title"));
 
         readFromFile();
         initList();
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         TextView noNotes = (TextView)findViewById(R.id.noNotes);
         TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);
         TextView noNotes3 = (TextView)findViewById(R.id.noNotes3);
-        if(arrayList.size()!=0){
+        if(arrayNotesList.size()!=0){
             noNotes.setText("");
             noNotes2.setText("");
             noNotes3.setText("");}
@@ -101,30 +104,63 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void readFromFile() {
-        counter = 0;
         BufferedReader bufferedReader = null;
         String line;
+
+        try {
+            inputStream = openFileInput(PATH_TITLES);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = bufferedReader.readLine()) != null) {
+                if (!line.equals("")) {
+                    arrayTitlesList.add(line);
+                }
+            }inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             inputStream = openFileInput(PATH);
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = bufferedReader.readLine()) != null) {
                 if (!line.equals("")) {
-                    arrayList.add(line);
+                    arrayNotesList.add(line);
                 }
             }inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void addNote() {
+        if(!noteText.getText().equals("")){
+            arrayTitlesList.add(noteTitle.getText().toString());
+            arrayNotesList.add(noteText.getText().toString());
+            writeToFile();
+            initList();
+        }
+    }
     private void writeToFile() {
-        counter = arrayList.size() - 1;
+        try {
+            outputStream = openFileOutput(PATH_TITLES, Context.MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+
+            outputStream = openFileOutput(PATH_TITLES, Context.MODE_APPEND);
+            for (int i = 0; i<arrayNotesList.size();i++){
+                outputStream.write(arrayTitlesList.get(i).getBytes());
+                outputStream.write(("\n").getBytes());
+            }
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
             outputStream.write("".getBytes());
             outputStream.close();
             outputStream = openFileOutput(PATH, Context.MODE_APPEND);
-            for (int i = 0; i<arrayList.size();i++){
-                outputStream.write(arrayList.get(i).getBytes());
+            for (int i = 0; i<arrayNotesList.size();i++){
+                outputStream.write(arrayNotesList.get(i).getBytes());
                 outputStream.write(("\n").getBytes());
             }
             outputStream.close();
@@ -132,13 +168,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public void addNote() {
-        if(!noteText.getText().equals("")){
-            arrayList.add(noteText.getText().toString());
-            writeToFile();
-            initList();
-        }
-    }
+
     public void initList() {
         getDataSet();
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
@@ -154,10 +184,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
                 Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
-                noteText.setText(arrayList.get(position));
+                noteText.setText(arrayNotesList.get(position));
+                noteTitle.setText(arrayTitlesList.get(position));
                 intent.putExtra("note", noteText.getText().toString());
+                intent.putExtra("title", noteTitle.getText().toString());
                 startActivity(intent);
-                arrayList.remove(position);
+                arrayTitlesList.remove(position);
+                arrayNotesList.remove(position);
                 writeToFile();
             }
         });
@@ -165,16 +198,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<DataObject> getDataSet() {
         ArrayList results = new ArrayList<DataObject>();
-        if(arrayList.size()!=0){
-        for (int index = 0; index < arrayList.size(); index++) {
-        // setTitle("в циклі " + arrayList.size());
-            DataObject obj = new DataObject("note" + (index+1),
-                  arrayList.get(index));
+        if(arrayNotesList.size()!=0){
+        for (int index = 0; index < arrayNotesList.size(); index++) {
+            DataObject obj = new DataObject(arrayTitlesList.get(index),
+                    arrayNotesList.get(index));
             results.add(index, obj);
         }}
         return results;
     }
-
 
     public void deleteElement(){
         try {
@@ -182,8 +213,8 @@ public class MainActivity extends AppCompatActivity {
             outputStream.write("".getBytes());
             outputStream.close();
             outputStream = openFileOutput(PATH, Context.MODE_APPEND);
-            for (int i = 0; i<arrayList.size();i++){
-                outputStream.write(arrayList.get(i).getBytes());
+            for (int i = 0; i<arrayNotesList.size();i++){
+                outputStream.write(arrayNotesList.get(i).getBytes());
                 outputStream.write(("\n").getBytes());
             }
             outputStream.close();
@@ -202,7 +233,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     //toolbar
     private void initToolbar() {
