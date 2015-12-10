@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,12 +42,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-   // File notes = new File( PATH);
-  //  File title = new File( PATH_TITLES);
     private static final String PATH = "data.txt";
     private static final String PATH_TITLES = "title.txt";
     private static String LOG_TAG = "CardViewActivity";
     public static final int LAYOUT = R.layout.activity_main;
+    public static final int LAYOUT_TABLET = R.layout.activity_main_tablet;
     public Drawer result;
     public Intent intent;
     public Toolbar toolbar;
@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        setContentView(LAYOUT);
+        if(isTablet())setContentView(LAYOUT_TABLET);
+        else setContentView(LAYOUT);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         cardView = (CardView)findViewById(R.id.card_view);
 
@@ -91,6 +93,24 @@ public class MainActivity extends AppCompatActivity {
         initToolbar();
         initNavigation(toolbar);
     }
+
+    public boolean isTablet() {
+        try {
+            DisplayMetrics dm = mRecyclerView.getResources().getDisplayMetrics();
+            float screenWidth  = dm.widthPixels / dm.xdpi;
+            float screenHeight = dm.heightPixels / dm.ydpi;
+            double size = Math.sqrt(Math.pow(screenWidth, 2) +
+                    Math.pow(screenHeight, 2));
+            // Tablet devices should have a screen size greater than 6 inches
+            if(size>=7)return true;
+            else return false;
+        } catch(Throwable t) {
+
+            return false;
+        }
+
+    }
+
 
     public void noteCheck(){
         TextView noNotes = (TextView)findViewById(R.id.noNotes);

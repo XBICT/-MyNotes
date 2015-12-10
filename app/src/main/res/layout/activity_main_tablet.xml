@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BGNgoodle"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:elevation="4dp"
+            android:background="?attr/colorPrimary" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:paddingTop="66dp"
+            android:gravity="center"
+            android:paddingLeft="250dp"
+            android:paddingRight="250dp"
+
+            />
+
+        <TextView
+            android:id="@+id/position"
+            style="@style/StateText"/>
+
+        <TextView
+            android:id="@+id/count"
+            style="@style/StateText"/>
+
+        <TextView
+            android:id="@+id/state"
+            style="@style/StateText"/>
+
+        <TextView
+            android:id="@+id/noteTitle"
+            style="@style/StateText"/>
+        <TextView
+            android:id="@+id/noteText"
+            style="@style/StateText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/noNotes"
+            android:id="@+id/noNotes"
+            android:textSize="28sp"
+            android:textColor="@color/material_grey_500"
+            android:layout_marginTop="230dp"
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/noNotes2"
+            android:id="@+id/noNotes2"
+            android:layout_below="@+id/noNotes"
+            android:textSize="28sp"
+            android:textColor="@color/material_grey_500"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/noNotes3"
+            android:id="@+id/noNotes3"
+            android:textStyle="bold"
+            android:layout_below="@+id/noNotes2"
+            android:textSize="28sp"
+            android:textColor="#757575"
+            android:layout_centerHorizontal="true"
+            android:onClick="onclick" />
+
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_note_add_white_24dp"
+
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="30dp"
+            android:onClick="onclick" />
+
+    </RelativeLayout>
+
+
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"/>
+
+</android.support.v4.widget.DrawerLayout>

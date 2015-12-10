@@ -18,13 +18,13 @@
         <activity
             android:name=".NewNoteActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+           >
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+      >
         </activity>
 
     </application>
