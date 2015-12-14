@@ -39,7 +39,6 @@ public class NewNoteActivity extends AppCompatActivity {
             public void run() {
                 InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 keyboard.showSoftInput(noteText, 0);
-
             }
         }, 50);
 

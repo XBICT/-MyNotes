@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void noteCheck(){
         TextView noNotes = (TextView)findViewById(R.id.noNotes);
         TextView noNotes2 = (TextView)findViewById(R.id.noNotes2);

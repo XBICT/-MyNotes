@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,19 +60,19 @@ public class SettingsActivity extends AppCompatActivity {
         initSetList();
         final ListView listSettings = (ListView)findViewById(R.id.listSettings);
         final ArrayAdapter<String> settingsAdapter;
+
         settingsAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, settingsArray);
         listSettings.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this, R.style.MaterialBaseTheme_Light_AlertDialog);
                 switch (position){
                     case 0:
                         builder.setTitle("Вибір теми")
-                                .setMessage("Покормите кота!")
                                 .setCancelable(true)
-                                .setNegativeButton("ОК, иду на кухню",
+                                .setNegativeButton("ОК",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 dialog.cancel();
@@ -80,9 +81,8 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case 1:
                         builder.setTitle("Вибір мови")
-                                .setMessage("Покормите кота!")
                                 .setCancelable(true)
-                                .setNegativeButton("ОК, иду на кухню",
+                                .setNegativeButton("ОК",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 dialog.cancel();
