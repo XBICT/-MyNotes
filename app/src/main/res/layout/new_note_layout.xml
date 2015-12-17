@@ -8,29 +8,12 @@
 
 <include android:id="@+id/toolbar"
     layout="@layout/toolbar"/>
-    <EditText
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/noteTitle"
-        android:inputType="textCapWords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="30sp"
-        android:textColor="@color/material_grey_500"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColorHint="@color/material_grey_500"
-        android:background="@color/BGNgoodle"
-        android:hint="@string/noteTitleHint" />
 
     <EditText android:id="@+id/noteText"
-        android:layout_below="@+id/noteTitle"
-        android:inputType="textCapWords"
+        android:layout_below="@+id/toolbar"
         android:selectAllOnFocus="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:textColorHint="@color/material_grey_500"
         android:layout_marginLeft="20sp"
         android:enabled="true"

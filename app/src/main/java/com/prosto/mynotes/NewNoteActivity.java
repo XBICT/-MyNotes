@@ -16,7 +16,6 @@ public class NewNoteActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
     private EditText noteText;
-    private EditText noteTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +25,8 @@ public class NewNoteActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         noteText = (EditText) findViewById(R.id.noteText);
-        noteTitle = (EditText) findViewById(R.id.noteTitle);
         noteText.setText(getIntent().getStringExtra("note"));
-        noteTitle.setText(getIntent().getStringExtra("title"));
+
 
         noteActivate();
         initToolbar();
@@ -49,7 +47,7 @@ public class NewNoteActivity extends AppCompatActivity {
     public void onclick(View v) {
                 Intent intent = new Intent(NewNoteActivity.this, MainActivity.class);
                 intent.putExtra("note", noteText.getText().toString());
-                intent.putExtra("title", noteTitle.getText().toString());
+
                 startActivity(intent);
     }
 

@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public Intent intent;
     public Toolbar toolbar;
     public TextView noteText;
-    public TextView noteTitle;
     public CardView cardView;
 
      //CardView
@@ -68,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);
-        if(isTablet())setContentView(LAYOUT_TABLET);
-        else setContentView(LAYOUT);
+        setContentView(LAYOUT);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         cardView = (CardView)findViewById(R.id.card_view);
@@ -81,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         noteText = (TextView)findViewById(R.id.noteText);
-        noteTitle = (TextView)findViewById(R.id.noteTitle);
         noteText.setText(getIntent().getStringExtra("note"));
-        noteTitle.setText(getIntent().getStringExtra("title"));
 
         readFromFile();
         initList();
@@ -101,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
             float screenHeight = dm.heightPixels / dm.ydpi;
             double size = Math.sqrt(Math.pow(screenWidth, 2) +
                     Math.pow(screenHeight, 2));
-            // Tablet devices should have a screen size greater than 6 inches
-            if(size>=7)return true;
-            else return false;
+            if(size>=7){return true;}
+            else{ return false;}
         } catch(Throwable t) {
 
             return false;
@@ -130,18 +126,6 @@ public class MainActivity extends AppCompatActivity {
         String line;
 
         try {
-            inputStream = openFileInput(PATH_TITLES);
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            while ((line = bufferedReader.readLine()) != null) {
-                if (!line.equals("")) {
-                    arrayTitlesList.add(line);
-                }
-            }inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             inputStream = openFileInput(PATH);
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             while ((line = bufferedReader.readLine()) != null) {
@@ -155,27 +139,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void addNote() {
         if(!noteText.getText().equals("")){
-            arrayTitlesList.add(noteTitle.getText().toString());
             arrayNotesList.add(noteText.getText().toString());
             writeToFile();
             initList();
         }
     }
     private void writeToFile() {
-        try {
-            outputStream = openFileOutput(PATH_TITLES, Context.MODE_PRIVATE);
-            outputStream.write("".getBytes());
-            outputStream.close();
-
-            outputStream = openFileOutput(PATH_TITLES, Context.MODE_APPEND);
-            for (int i = 0; i<arrayNotesList.size();i++){
-                outputStream.write(arrayTitlesList.get(i).getBytes());
-                outputStream.write(("\n").getBytes());
-            }
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         try {
             outputStream = openFileOutput(PATH, Context.MODE_PRIVATE);
             outputStream.write("".getBytes());
@@ -197,33 +166,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
-                noteText.setText(arrayNotesList.get(position));
-                noteTitle.setText(arrayTitlesList.get(position));
-                intent.putExtra("note", noteText.getText().toString());
-                intent.putExtra("title", noteTitle.getText().toString());
-                startActivity(intent);
-                arrayTitlesList.remove(position);
-                arrayNotesList.remove(position);
-                writeToFile();
-            }
-        });
-    }
 
     private ArrayList<DataObject> getDataSet() {
-        ArrayList results = new ArrayList<DataObject>();
+        ArrayList results = new ArrayList<>();
         if(arrayNotesList.size()!=0){
         for (int index = 0; index < arrayNotesList.size(); index++) {
-            DataObject obj = new DataObject(arrayTitlesList.get(index),
-                    arrayNotesList.get(index));
+            DataObject obj = new DataObject(arrayNotesList.get(index),"");
             results.add(index, obj);
         }}
         return results;
@@ -254,6 +202,24 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+                Intent intent = new Intent(MainActivity.this, NewNoteActivity.class);
+                noteText.setText(arrayNotesList.get(position));
+                intent.putExtra("note", noteText.getText().toString());
+                startActivity(intent);
+                arrayNotesList.remove(position);
+                writeToFile();
+            }
+        });
     }
 
     //toolbar
